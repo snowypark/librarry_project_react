@@ -1,8 +1,6 @@
 import { css } from "@emotion/react";
 
-
 export const header = css`
-    transition: all 0.5s ease-in-out;
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -12,7 +10,6 @@ export const header = css`
     padding: 0px 10px;
     width: 100%;
     height: 50px;
-
 `;
 
 export const menuButton = css`
@@ -25,5 +22,4 @@ export const menuButton = css`
     & > * {
         font-size: 16px;
     }
-
 `;
