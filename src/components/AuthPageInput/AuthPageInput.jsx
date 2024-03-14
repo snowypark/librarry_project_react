@@ -2,7 +2,7 @@
 import * as s from "./style"
 import { MdErrorOutline, MdCheckCircleOutline } from "react-icons/md";
 
-function AuthPageInput({type, name, placeholder, value, onChange, ref, message}) {
+function AuthPageInput({type, name, placeholder, value, onChange, onBlur, ref, message}) {
     return (
         <div css={s.inputBox}>
             <input 
@@ -12,6 +12,7 @@ function AuthPageInput({type, name, placeholder, value, onChange, ref, message})
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
+                onBlur={onBlur}
                 ref={ref} 
             />
             {
