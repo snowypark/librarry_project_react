@@ -23,3 +23,18 @@ export const menuButton = css`
         font-size: 16px;
     }
 `;
+
+export const account = css`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 8px;
+    border: 1px solid #dbdbdb;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #222222;
+    cursor: pointer;
+`;
