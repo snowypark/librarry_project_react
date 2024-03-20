@@ -5,5 +5,4 @@ export const header = css`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    
 `;

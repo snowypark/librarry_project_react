@@ -12,5 +12,4 @@ export const button = css`
     &:hover {
         text-shadow: 0px 0px 10px #19a3ff88;
     }
-
 `;

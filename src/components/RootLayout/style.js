@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 
-export const background = css `    
+export const background = css`
     position: fixed;
     top: 0;
     left: 0;
@@ -12,6 +12,7 @@ export const background = css `
 
 export const layout = css`
     box-sizing: border-box;
+    position: relative;
     margin: 100px auto;
     border: 2px solid #fafafa;
     border-radius: 30px;
@@ -20,5 +21,4 @@ export const layout = css`
     height: 600px;
     overflow: hidden;
     background-color: black;
-    
 `;

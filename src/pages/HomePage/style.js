@@ -1,8 +1,9 @@
 import { css } from "@emotion/react";
 
-export const header = css`
+export const layout = css`
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     width: 100%;
+    height: 100%;
 `;

@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
 
-function RootContainer({ children }) {
+function PageContainer({ children }) {
     return (
         <div css={s.container}>
             {children}
@@ -9,4 +9,4 @@ function RootContainer({ children }) {
     );
 }
 
-export default RootContainer;
+export default PageContainer;

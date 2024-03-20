@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
-import * as s from "./style"
-import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
-import RightTopButton from "../../components/RightTopButton/RightTopButton";
+import * as s from "./style";
+
+import AuthPageInput from '../../components/AuthPageInput/AuthPageInput';
+import RightTopButton from '../../components/RightTopButton/RightTopButton';
 import { useInput } from "../../hooks/useInput";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupRequest } from "../../apis/api/signup";
-
 
 function SignupPage() {
     const navigate = useNavigate();
@@ -15,12 +15,11 @@ function SignupPage() {
     const [ username, userNameChange, usernameMessage, setUsernameValue, setUsernameMessage ] = useInput("username");
     const [ password, passwordChange, passwordMessage ] = useInput("password");
     const [ checkPassword, checkPasswordChange ] = useInput("checkPassword");
-    const [ name,nameChange, nameMessage ] = useInput("name");
+    const [ name, nameChange, nameMessage ] = useInput("name");
     const [ email, emailChange, emailMessage ] = useInput("email");
     const [ checkPasswordMessage, setCheckPasswordMessage ] = useState(null);
 
-
-    useEffect(() => {   // 둘 다 값이 비었을 때 비교
+    useEffect(() => {
         if(!checkPassword || !password) {
             setCheckPasswordMessage(() => null);
             return;
@@ -28,25 +27,22 @@ function SignupPage() {
 
         if(checkPassword === password) {
             setCheckPasswordMessage(() => {
-                return{
+                return {
                     type: "success",
                     text: ""
                 }
             })
-        }else {
+        } else {
             setCheckPasswordMessage(() => {
-                return{
+                return {
                     type: "error",
                     text: "비밀번호가 일치하지 않습니다."
                 }
             })
         }
-    }, [checkPassword, password])
-
+    }, [checkPassword, password]);
 
     const handleSignupSubmit = () => {
-
-        // 입력값 타입 확인
         const checkFlags = [
             usernameMessage?.type,
             passwordMessage?.type,
@@ -55,9 +51,8 @@ function SignupPage() {
             emailMessage?.type
         ];
 
-        //error,null 포함 확인
-        if(checkFlags.includes("error") || checkFlags.includes(undefined) || checkFlags.includes(null)) {  
-            alert("가입 정보를 다시 확인하세요.")
+        if(checkFlags.includes("error") || checkFlags.includes(undefined) || checkFlags.includes(null)) {
+            alert("가입 정보를 다시 확인하세요.");
             return;
         }
 
@@ -68,47 +63,41 @@ function SignupPage() {
             email
         }).then(response => {
             console.log(response);
-            if(response.status === 201) {
-                navigate("/auth/signin")
-                }
-            }).catch(error => {
-                if(error.response.status === 400) {
-                    const errorMap = error.response.data;
-                    const errorEntries = Object.entries(errorMap);
-                    for(let [ k, v ] of errorEntries) {
-                        if(k === "username") {
-                            setUsernameMessage(() => {
-                                return {
-                                    type: "error",
-                                    text: v
-                                }
-                            })
-                        }
+            if(response.status === 201){
+                navigate("/auth/signin");
+            }
+        }).catch(error => {
+            if(error.response.status === 400) {
+                const errorMap = error.response.data;
+                const errorEntries = Object.entries(errorMap);
+                for(let [ k, v ] of errorEntries) {
+                    if(k === "username") {
+                        setUsernameMessage(() => {
+                            return {
+                                type: "error",
+                                text: v
+                            }
+                        })
                     }
-                } else{
-                    alert("회원가입 오류");
                 }
-            })
-
+            } else {
+                alert("회원가입 오류");
+            }
+        });
     }
-   
 
-    
     return (
-        <div>
+        <>
             <div css={s.header}>
                 <h1>회원가입</h1>
                 <RightTopButton onClick={handleSignupSubmit}>가입하기</RightTopButton>
             </div>
-
-            <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={userNameChange} message={usernameMessage}/>
-            <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} message={passwordMessage}/>
-            <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage}/>
-            <AuthPageInput type={"text"} name={"name"} placeholder={"이름"} value={name} onChange={nameChange} message={nameMessage}/>
-            <AuthPageInput type={"text"} name={"email"} placeholder={"이메일"} value={email} onChange={emailChange} message={emailMessage}/>
-            
-
-        </div>
+            <AuthPageInput type={"text"} name={"username"} placeholder={"사용자이름"} value={username} onChange={userNameChange} message={usernameMessage} />
+            <AuthPageInput type={"password"} name={"password"} placeholder={"비밀번호"} value={password} onChange={passwordChange} message={passwordMessage} />
+            <AuthPageInput type={"password"} name={"checkPassword"} placeholder={"비밀번호 확인"} value={checkPassword} onChange={checkPasswordChange} message={checkPasswordMessage} />
+            <AuthPageInput type={"text"} name={"name"} placeholder={"성명"} value={name} onChange={nameChange} message={nameMessage} />
+            <AuthPageInput type={"text"} name={"email"} placeholder={"이메일"} value={email} onChange={emailChange} message={emailMessage} />
+        </>
     );
 }
 

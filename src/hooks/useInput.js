@@ -2,28 +2,26 @@ import { useEffect, useState } from "react"
 import { REGEX } from "../constants/regex";
 
 export const useInput = (property) => {
-    const [ value, setValue ] = useState();
+    const [ value, setValue ] = useState("");
     const [ message, setMessage ] = useState(null);
 
-    useEffect(() => {        
-        if(!value) {    //빈값이면 null
+    useEffect(() => {
+        if(!value) {
             setMessage(() => null);
             return;
         }
 
-        // 정규식 확인
         const regexEntries = Object.entries(REGEX);
-
-        for(let [k, v] of regexEntries) {
+        for(let [ k, v ] of regexEntries) {
             if(property === k) {
-                if (v.regexr.test(value)) {
+                if(v.regexr.test(value)) {
                     setMessage(() => {
                         return {
                             type: "success",
                             text: ""
                         }
                     })
-                }else{
+                }else {
                     setMessage(() => {
                         return {
                             type: "error",

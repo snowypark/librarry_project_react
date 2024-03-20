@@ -1,14 +1,21 @@
 /** @jsxImportSource @emotion/react */
-import * as s from "./style"
+import { useRecoilState } from "recoil";
+import * as s from "./style";
+import { menuState } from "../../atoms/menuAtom";
 
+function RootLayout({ children }) {
+    const [ show, setShow ] = useRecoilState(menuState);
 
-function RootLayout({children}) {
+    const handleBackgroundClick = (e) => {
+        setShow(() => false);
+    }
+
     return (
         <>
             <div css={s.background}></div>
-            <dir css={s.layout}> 
+            <div css={s.layout} onClick={handleBackgroundClick}>
                 {children}
-            </dir>
+            </div>
         </>
     );
 }
