@@ -8,11 +8,13 @@ import SignupPage from "../SignupPage/SignupPage";
 import * as s from "./style";
 import { Route, Routes } from 'react-router-dom';
 import { useEffect } from "react";
+import OAuth2MergePage from "../OAuth2MergePage/OAuth2MergePage";
 
 function AuthPage() {
 
     const queryClient = useQueryClient();
-    const principalData = queryClient.getQueryCache("principalQuery");
+    const principalData = queryClient.getQueryData("principalQuery");
+
 
     useEffect(() => {
         if(!!principalData) {
@@ -21,6 +23,7 @@ function AuthPage() {
         }
     }, []);
 
+
     return (
         <div css={s.layout}>
             <Routes>
@@ -28,7 +31,7 @@ function AuthPage() {
                 <Route path='/signup' element={ <SignupPage /> } />
                 <Route path="/oauth2" element={ <OAuth2Page /> }/>
                 <Route path='/oauth2/signin' element={ <OAuth2SigninPage />}/>
-                <Route path='/oauth2/merge' />
+                <Route path='/oauth2/merge' element={ <OAuth2MergePage />}/>
                 <Route path='/oauth2/signup' element={ <OAuth2SignupPage />} />
                 
             </Routes>
