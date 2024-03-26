@@ -1,6 +1,5 @@
-import { css } from '@emotion/react';
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import { css } from '@emotion/react';
 
 const inputBox = css`
     box-sizing: border-box;
@@ -12,7 +11,7 @@ const inputBox = css`
 `;
 
 function BookRegisterInput({ value, onChange, onKeyDown, bookref }) {
-    
+
     return (
         <input 
             css={inputBox}
@@ -24,6 +23,5 @@ function BookRegisterInput({ value, onChange, onKeyDown, bookref }) {
         />
     );
 }
-
 
 export default BookRegisterInput;

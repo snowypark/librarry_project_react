@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
-import { useRecoilState } from "recoil";
 import * as s from "./style";
+import { useRecoilState } from "recoil";
 import { HiMenu } from "react-icons/hi";
 import { menuState } from "../../atoms/menuAtom";
 import { Link, useNavigate } from "react-router-dom";

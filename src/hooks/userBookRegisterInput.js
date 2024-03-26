@@ -2,12 +2,11 @@ import { useState } from "react"
 
 export const useBookRegisterInput = (enterFn, ref) => {
     const [ value, setValue ] = useState("");
-    console.log(ref);
 
     const handleOnChange = (e) => {
         if(!!e.target) {
             setValue(() => e.target.value);
-        }else {
+        } else {
             setValue(() => e.value);
         }
     }
