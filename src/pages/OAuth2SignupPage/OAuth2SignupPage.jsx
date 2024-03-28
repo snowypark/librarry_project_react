@@ -1,16 +1,17 @@
 /** @jsxImportSource @emotion/react */
-import { useNavigate, useSearchParams } from "react-router-dom";
 import * as s from "./style";
+
+import AuthPageInput from '../../components/AuthPageInput/AuthPageInput';
+import RightTopButton from '../../components/RightTopButton/RightTopButton';
 import { useInput } from "../../hooks/useInput";
 import { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { oAuth2SignupRequest, signupRequest } from "../../apis/api/signup";
-import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
-import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import { useMutation } from "react-query";
 
 function OAuth2SignupPage() {
-    const navigate = useNavigate();
     const [ searchParams ] = useSearchParams();
+    const navigate = useNavigate();
 
     const [ username, userNameChange, usernameMessage, setUsernameValue, setUsernameMessage ] = useInput("username");
     const [ password, passwordChange, passwordMessage ] = useInput("password");
@@ -24,7 +25,6 @@ function OAuth2SignupPage() {
         mutationFn: oAuth2SignupRequest,
         onSuccess: response => {
             navigate("/auth/signin");
-            
         },
         onError: error => {
             if(error.response.status === 400) {
@@ -43,7 +43,6 @@ function OAuth2SignupPage() {
             } else {
                 alert("회원가입 오류");
             }
-            
         }
     });
 
@@ -92,8 +91,6 @@ function OAuth2SignupPage() {
             oauth2Name: searchParams.get("name"),
             providerName: searchParams.get("provider")
         });
-
-
     }
 
     return (

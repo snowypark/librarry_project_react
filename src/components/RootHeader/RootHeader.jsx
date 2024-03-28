@@ -5,11 +5,11 @@ import { HiMenu } from "react-icons/hi";
 import { menuState } from "../../atoms/menuAtom";
 import { Link } from "react-router-dom";
 import { FiUser, FiLogOut } from "react-icons/fi";
+import { useQueryClient } from "react-query";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import instance from "../../apis/utils/instance";
 import { principalState } from "../../atoms/principalAtom";
-import { useQueryClient } from "react-query";
 
 function RootHeader() {
     const [ show, setShow ] = useRecoilState(menuState);

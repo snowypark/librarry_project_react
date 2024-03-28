@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import * as s from "./style";
 import { sendAuthMailRequest } from "../../apis/api/sendAuthMail";
 import FullSizeLoader from "../../components/FullSizeLoader/FullSizeLoader";
@@ -8,14 +8,11 @@ import { useAuthCheck } from "../../hooks/useAuthCheck";
 import { useNavigate } from "react-router-dom";
 
 function MyPage() {
-
     useAuthCheck();
     const navigate = useNavigate();
-    const authCheck = useAuthCheck(); // 로그인 확인
-
     const queryClient = useQueryClient();
     const principalData = queryClient.getQueryData("principalQuery");
-
+    
     const sendAuthMailMutation = useMutation({
         mutationKey: "sendAuthMailMutation",
         mutationFn: sendAuthMailRequest,
@@ -27,13 +24,11 @@ function MyPage() {
                 alert("메일 전송에 실패하였습니다.");
             }
         }
-
     });
 
     const handleSendAuthMailClick = () => {
         sendAuthMailMutation.mutate();
     }
-
 
     return (
         <>

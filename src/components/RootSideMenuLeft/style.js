@@ -6,6 +6,7 @@ export const layout = (show) => css`
     position: absolute;
     top: 0;
     left: ${show ? "0px" : "-200px"};
+    z-index: 99;
     box-sizing: border-box;
     border-right: 1px solid #dbdbdb;
     padding: 15px 0px;

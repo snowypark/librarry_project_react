@@ -4,7 +4,6 @@ import * as s from "./style";
 import AuthPageInput from '../../components/AuthPageInput/AuthPageInput';
 import RightTopButton from '../../components/RightTopButton/RightTopButton';
 import { useInput } from "../../hooks/useInput";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupRequest } from "../../apis/api/signup";

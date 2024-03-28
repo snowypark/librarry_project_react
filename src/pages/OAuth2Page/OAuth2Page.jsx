@@ -1,13 +1,10 @@
-/** @jsxImportSource @emotion/react */
-
-import { Link, useSearchParams } from "react-router-dom";
+import React from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 
 function OAuth2Page() {
-
-    const [searchParams] = useSearchParams();
+    const [ searchParams ] = useSearchParams();
     const name = searchParams.get("name");
     const provider = searchParams.get("provider");
-
 
     return (
         <div>

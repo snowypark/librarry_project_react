@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import * as s from "./style";
 import { Link } from "react-router-dom";
 import AuthPageInput from "../../components/AuthPageInput/AuthPageInput";
 import RightTopButton from "../../components/RightTopButton/RightTopButton";
 import { useInput } from "../../hooks/useInput";
+import * as s from "./style";
 import { signinRequest } from "../../apis/api/signin";
 
 function SigninPage() {

@@ -2,18 +2,16 @@
 import Select from "react-select";
 import * as s from "./style";
 import { useQuery, useQueryClient } from "react-query";
-import { useEffect, useInsertionEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReactSelect } from "../../hooks/useReactSelect";
-import { useBookRegisterInput } from "../../hooks/userBookRegisterInput";
+import { useBookRegisterInput } from "../../hooks/useBookRegisterInput";
 import { getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi";
 import { useSearchParams } from "react-router-dom";
-import AdminBooksSearchPageNumbers from "../AdminBookSearchPageNumbers/AdminBooksSearchPageNumbers";
+import AdminBookSearchPageNumbers from "../AdminBookSearchPageNumbers/AdminBookSearchPageNumbers";
 import { useRecoilState } from "recoil";
 import { selectedBookState } from "../../atoms/adminSelectedBookAtom";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
-
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 20;
     const [ bookList, setBookList ] = useState([]);
@@ -21,7 +19,6 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
         checked: false,
         target: 1   // 1 => 전체 선택, 2 => 부분 선택
     });
-    
     const [ selectedBook, setSelectedBook ] = useRecoilState(selectedBookState);
     const [ lastCheckBookId, setLastCheckBookId ] = useState(0);
 
@@ -137,41 +134,32 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
         }
     }, [bookList]);
 
-
     useEffect(() => {
-        let lastSelectedBook = {...selectedBook};
+        let lastSeletedBook = {...selectedBook};
         let checkStatus = false;
-
-        lastSelectedBook = bookList.filter(book => 
-                        book.bookId === lastCheckBookId 
-                        && book.checked === true)[0];
-
-        if(!!lastSelectedBook) {
+        lastSeletedBook = bookList.filter(book => book.bookId === lastCheckBookId && book.checked === true)[0];
+        if(!!lastSeletedBook) {
             checkStatus = true;
         }
 
-        if(!checkStatus) {            
+        if(!checkStatus) {
             setSelectedBook(() => ({
-                
-                    bookId: 0,
-                    isbn: "",
-                    bookTypeId: 0,
-                    bookTypeName: "",
-                    categoryId: 0,
-                    categoryName: "",
-                    bookName: "",
-                    authorName: "",
-                    publisherName: "",
-                    coverImgUrl: ""
-                
-            }))
-        }else {
-            setSelectedBook(() => lastSelectedBook)
+                bookId: 0,
+                isbn: "",
+                bookTypeId: 0,
+                bookTypeName: "",
+                categoryId: 0,
+                categoryName: "",
+                bookName: "",
+                authorName: "",
+                publisherName: "",
+                coverImgUrl: ""
+            }));
+        } else {
+            setSelectedBook(() => lastSeletedBook);
         }
-        
-        
-    }, [bookList]);
 
+    }, [bookList]);
 
     const handleCheckOnChange = (e) => {
         const bookId = parseInt(e.target.value);
@@ -189,9 +177,8 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
         setLastCheckBookId(() => bookId);
     }
 
-
     return (
-    <div>
+        <div>
             <div css={s.searchBar}>
                 <Select 
                     styles={selectStyle2} 
@@ -265,7 +252,7 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
             </div>
             {
                !getBookCountQuery.isLoading &&
-               <AdminBooksSearchPageNumbers bookCount={getBookCountQuery.data?.data}/>
+               <AdminBookSearchPageNumbers bookCount={getBookCountQuery.data?.data}/>
             }
         </div>
     );

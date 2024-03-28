@@ -53,9 +53,8 @@ function AuthRoute(props) {
                         <Route path="/auth/*" element={ <AuthPage /> } />
                         <Route path="/" element={ <HomePage /> } />
                         <Route path="/account/mypage" element={ <MyPage /> } />
-                        <Route path="/account/edit/password" element={ < PasswordEditPage /> } />
-                        <Route path="/admin/book/management" element={ <BookManagement /> }/>
-                        
+                        <Route path="/account/edit/password" element={ <PasswordEditPage /> } />
+                        <Route path="/admin/book/management" element={ <BookManagement /> } />
                     </Routes> 
                 }
             </PageContainer>

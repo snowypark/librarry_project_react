@@ -1,25 +1,24 @@
 /** @jsxImportSource @emotion/react */
 import Select from "react-select";
-import BookRegisterInput from "../../../components/BookRegister/BookRegisterInput";
+import BookRegisterInput from "../../../components/BookRegisterInput/BookRegisterInput";
 import * as s from "./style";
 import { useMutation, useQuery } from "react-query";
 import { getAllBookTypeRequest, getAllCategoryRequest } from "../../../apis/api/options";
 import { useEffect, useRef, useState } from "react";
 import { CiSquarePlus } from "react-icons/ci";
-import { useBookRegisterInput } from "../../../hooks/userBookRegisterInput";
-import { storage } from "../../../apis/api/firebase/config/firebaseConfig";
+import { useBookRegisterInput } from "../../../hooks/useBookRegisterInput";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
-import {v4 as uuid} from "uuid";
+import { storage } from "../../../apis/firebase/config/firebaseConfig";
+import { v4 as uuid } from "uuid";
 import RightTopButton from "../../../components/RightTopButton/RightTopButton";
 import { registerBook } from "../../../apis/api/bookApi";
 import AdminBookSearch from "../../../components/AdminBookSearch/AdminBookSearch";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { selectedBookState } from "../../../atoms/adminSelectedBookAtom";
 
 function BookManagement(props) {
     const [ bookTypeOptions, setBookTypeOptions ] = useState([]);
     const [ categoryOptions, setCategoryOptions ] = useState([]);
-
     const fileRef = useRef();
     const inputRefs = [
         useRef(),   // 0 bookId
@@ -31,7 +30,16 @@ function BookManagement(props) {
         useRef(),   // 6 출판사
         useRef()    // 7 URL
     ];
-
+    
+    // const ir1=    useRef()   // 0 bookId
+    // const ir2=   useRef()   // 1 isbn
+    // const ir3=    useRef()   // 2 도서형식
+    // const ir4=    useRef()   // 3 카테고리
+    // const ir5=    useRef()   // 4 도서명
+    // const ir6=    useRef()   // 5 저자명
+    // const ir7=    useRef()   // 6 출판사
+    // const ir8=    useRef()    // 7 URL
+    
     const bookTypeQuery = useQuery(
         ["bookTypeQuery"], 
         getAllBookTypeRequest,
@@ -48,9 +56,9 @@ function BookManagement(props) {
             refetchOnWindowFocus: false
         }
     );
-
+    
     const categoryQuery = useQuery(
-        ["categoryQuery"],
+        ["categoryQuery"], 
         getAllCategoryRequest,
         {
             onSuccess: response => {
@@ -64,23 +72,23 @@ function BookManagement(props) {
             retry: 0,
             refetchOnWindowFocus: false
         }
-    );
+        );
+        
+        const registerBookMutation = useMutation({
+            mutationKey: "registerBookMutation",
+            mutationFn: registerBook,
+            onSuccess: response => {
 
-    const registerBookMutation = useMutation({
-        mutationKey: "registerBookMutation",
-        mutationFn: registerBook,
-        onSuccess: response => {
-
-        },
-        onError: error => {
-
-        }
-    }); 
+            },
+            onError: error => {
+                
+            }
+        }); 
 
     const nextInput = (ref) => {
         ref.current.focus();
     }
-
+    
     const submit = () => {
         registerBookMutation.mutate({
             isbn: isbn.value,
@@ -92,7 +100,7 @@ function BookManagement(props) {
             coverImgUrl: imgUrl.value
         });
     }
-
+    
     const bookId = useBookRegisterInput(nextInput, inputRefs[1]);
     const isbn = useBookRegisterInput(nextInput, inputRefs[2]);
     const bookTypeId = useBookRegisterInput(nextInput, inputRefs[3]);
@@ -101,8 +109,8 @@ function BookManagement(props) {
     const authorName = useBookRegisterInput(nextInput, inputRefs[6]);
     const publisherName = useBookRegisterInput(nextInput, inputRefs[7]);
     const imgUrl = useBookRegisterInput(submit);
-
     const [ selectedBook ] = useRecoilState(selectedBookState);
+    
     useEffect(() => {
         bookId.setValue(() => selectedBook.bookId);
         isbn.setValue(() => selectedBook.isbn);
@@ -112,7 +120,6 @@ function BookManagement(props) {
         authorName.setValue(() => selectedBook.authorName);
         publisherName.setValue(() => selectedBook.publisherName);
         imgUrl.setValue(() => selectedBook.coverImgUrl);
-
     }, [selectedBook]);
 
     const selectStyle = {
@@ -253,12 +260,11 @@ function BookManagement(props) {
                                 />
                             </td>
                         </tr>
-                        
                         <tr>
                             <th css={s.registerTh}>표지URL</th>
                             <td colSpan={3}>
                                 <div css={s.imgUrl}>
-                                    <span css={s.imgURLBox}>
+                                    <span css={s.imgUrlBox}>
                                         <BookRegisterInput 
                                             value={imgUrl.value} 
                                             bookref={inputRefs[7]}

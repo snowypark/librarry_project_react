@@ -1,12 +1,10 @@
 import { css } from "@emotion/react";
 
 export const layout = css`
-
     box-sizing: border-box;
     padding: 10px;
     width: 100%;
     height: 100%;
-
 `;
 
 export const header = css`
@@ -14,7 +12,7 @@ export const header = css`
     display: flex;
     justify-content: space-between;
 
-    % > h1 {
+    & > h1 {
         margin: 0;
         margin-bottom: 20px;
         font-size: 25px;
@@ -24,7 +22,6 @@ export const header = css`
 export const topLayout = css`
     display: flex;
     width: 100%;
-
 `;
 
 export const registerTable = css`
@@ -64,12 +61,17 @@ export const imageBox = css`
     height: 100%;
     overflow: hidden;
 
-    & > img {
+    & img {
         height: 150px;
     }
 `;
 
-export const imgURLBox = css`
+export const imgUrl = css`
+    display: flex;
+    align-items: flex-end;
+`;
+
+export const imgUrlBox = css`
     display: inline-block;
     width: 95%;
     line-height: 10px;
@@ -82,13 +84,7 @@ export const imgAddButton = css`
     padding: 0;
     background-color: transparent;
     cursor: pointer;
-
     & > * {
         font-size: 20px;
     }
-`;
-
-export const imgUrl = css`
-    display: flex;
-    align-items: flex-end;
 `;
