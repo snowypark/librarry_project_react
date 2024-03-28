@@ -1,17 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import Select from "react-select";
 import * as s from "./style";
-import { useQuery, useQueryClient } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useEffect, useRef, useState } from "react";
 import { useReactSelect } from "../../hooks/useReactSelect";
 import { useBookRegisterInput } from "../../hooks/useBookRegisterInput";
-import { getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi";
+import { deleteBooks, deleteBooksRequest, getBookCountRequest, searchBooksRequest } from "../../apis/api/bookApi";
 import { useSearchParams } from "react-router-dom";
 import AdminBookSearchPageNumbers from "../AdminBookSearchPageNumbers/AdminBookSearchPageNumbers";
 import { useRecoilState } from "recoil";
 import { selectedBookState } from "../../atoms/adminSelectedBookAtom";
 
-function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
+function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions, isDelete, setDelete }) {
     const [ searchParams, setSearchParams ] = useSearchParams();
     const searchCount = 20;
     const [ bookList, setBookList ] = useState([]);
@@ -44,6 +44,25 @@ function AdminBookSearch({ selectStyle, bookTypeOptions, categoryOptions }) {
             }
         }
     );
+
+    const deleteBooksMutation = useMutation({
+        mutationKey: "deleteBooksMutation",
+        mutationFn: deleteBooksRequest,
+        onSuccess: response => {
+            alert("삭제완료");
+            window.location.replace("/admin/book/management?page=1");
+        }
+    })
+
+    
+    useEffect(() => {
+        if(isDelete) {
+            const deleteBooks = bookList.filter(book => book.checked).map(book => book.bookId);
+            console.log(deleteBooks); 
+            deleteBooksMutation.mutate(deleteBooks);
+        }
+        setDelete(() => false)
+    }, [isDelete]);
 
     const getBookCountQuery = useQuery(
         ["getBookCountQuery", searchBooksQuery.data],
